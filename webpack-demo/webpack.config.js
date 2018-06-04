@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const glob = require('glob');
-const testing = false;
+const testing = true; 
 
 let filenameSearchPattern = "index.js";
 let filenameOutputPattern = "public/bundles/[name].js";
