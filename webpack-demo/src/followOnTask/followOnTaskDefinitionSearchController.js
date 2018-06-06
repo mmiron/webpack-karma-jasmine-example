@@ -1,3 +1,4 @@
+/* global Typeahead */
 import $ from 'jquery';
 
 import FollowOnTaskDefinitionSearchConfig from './followOnTaskDefinitionSearchConfig.js';
@@ -110,11 +111,7 @@ export default class FollowOnTaskDefinitionSearchController {
             data: config.data,
          },
          callback: {
-            onClickBefore: function(a, b, c, d) {
-               console.log("onClickBefore");
-            },
             onClick: function(typeAheadInputEl, selectionEl, selectedRecord, event) {
-               console.log("onClick", selectedRecord);
                event.preventDefault();
                scope.enableOkBtn();
 
