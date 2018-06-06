@@ -8,14 +8,35 @@
 
 <body>
 
-   <form id="form-typeahead-test" name="form-typeahead-test">
-      <div class="typeahead__container">
-         <div class="typeahead__field">
-            <span class="typeahead__query">
-                <input class="js-typeahead-test" name="test[query]" type="search" placeholder="Search" autocomplete="off">
-            </span>
-         </div>
-      </div>
+   <link rel="stylesheet" href="glyphicons.css">
+   <link rel="stylesheet" href="jquery-typeahead/dist/jquery.typeahead.min.css">
+   <link rel="stylesheet" href="followOnTaskDefinitionSearch.css">
+
+   <div id="idFollowOnTaskSearchDiv">
+      <table class="formTableFull">
+         <tr class="formHeaderRow">
+            <td>
+               <mx:Localize>web.lbl.CREATE_FOLLOW_ON_TASK_DEFINITION_SEARCH</mx:Localize>
+            </td>
+         </tr>
+         <tr class="formContentRow">
+            <td id="idTypeaheadSearchCell" align="center">
+               <div class="mx-typeahead-search-wrapper">
+                  <input id="idInputTypeaheadFollowOnTaskSearch" class="mx-typeahead-search" type="text" placeholder="<mx:Localize>web.lbl.SEARCH_BY_CODE_OR_NAME_OR_CONFIGSLOT_CODE</mx:Localize>" />
+                  <i class="glyphicons glyphicons-search"></i>
+               </div>
+            </td>
+         </tr>
+      </table>
+   </div>
+
+   <form name="frmCreateFollowOnTask" action='<%=iContextPath + CreateFollowOnTask.SERVLET_PATH%>' method="post" startTransaction="true">
+      <input type="hidden" name="aReturnToPage" value="<%=lController.getReturnToPageHash()%>" />
+      <input type="hidden" name="aAssembly" value='<%=lController.getAssemblyEncrypted()%>' />
+      <input type="hidden" name="aAssemblyInventory" value='<%=lController.getAssemblyInventoryEncrypted()%>' />
+      <input type="hidden" name="aTask" value='<%=lController.getTaskEncrypted()%>' />
+      <!--<%-- This attribute's value will be dynamically set based on what user select from the dropdown --%>-->
+      <input type="hidden" name="aFollowOnTaskDefinitionUuid" id="idFieldFollowOnTaskDefnUuid">
    </form>
 
    <!--<%-- The Bottom Buttons --%>-->
@@ -24,10 +45,218 @@
       <button id="idButtonCancel" text='web.lbl.CANCEL' redirectPage='lController.getReturnToPage()' type="CANCEL">Cancel</button>
    </div>
    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
-   <script type="text/javascript" src="jquery-typeahead/src/jquery.typeahead.js"></script>
+   <!--<script type="text/javascript" src="jquery-typeahead/src/jquery.typeahead.js"></script>-->
+   <script type="text/javascript" src="jquery-typeahead/dist/typeahead.bundle.min.old.js"></script>
+   <script type="text/javascript">
+      var FollowOnTaskDefinitionSearch = function() {
 
-   <script type="text/javascript" src="public/bundles/common-runtime.js"></script>
-   <script type="text/javascript" src="public/bundles/followOnTask.js"></script>
+         var selectedOption = '';
+
+         var typeAheadSearchInput = $('#idInputTypeaheadFollowOnTaskSearch');
+
+         var uuidInput = $('#idFieldFollowOnTaskDefnUuid');
+
+         var okBtn = $('#idButtonOk');
+
+         /**
+          * It contains all configurations for the type ahead search widget
+          */
+         var FollowOnTaskDefinitionSearchConfig = function(data) {
+
+            if (!data || !(data instanceof Array)) {
+               throw new Error("The response data is not array type.");
+            }
+
+            // The name of the dataset.
+            // This will be appended to the class name of the filtered result <div>.
+            var name = 'followOnTaskDefnSearch';
+
+            // The max number of suggestions to be displayed.
+            var limit = 50;
+
+            // The minimum character length needed before suggestions start getting rendered.
+            var minLength = 1;
+
+            // Define how the results are filtered based on user's type.
+            var followOnTaskDefnSearch = function(query, sync) {
+               var filteredList = data.filter(function(followOnTaskDefn) {
+                  var searchText = displayFollowOn(followOnTaskDefn);
+                  var isMatch = searchText.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+
+                  return isMatch;
+               });
+
+               // sort the filter result alphabetically in the order of task code -> configslot code -> task name
+               sync(filteredList.sort(function(a, b) {
+                  var compareResult = (a.code > b.code) ? 1 : ((a.code < b.code) ? -1 : 0);
+
+                  if (compareResult == 0) {
+                     compareResult = (a.configSlotCode > b.configSlotCode) ? 1 : ((a.configSlotCode < b.configSlotCode) ? -1 : 0);
+                  }
+
+                  if (compareResult == 0) {
+                     compareResult = (a.name > b.name) ? 1 : ((a.name < b.name) ? -1 : 0);
+                  }
+                  return compareResult;
+               }));
+            };
+
+            // Define how the result is displayed in the dropdown.
+            // It will display the result in the format of: task code - configslot code - task name
+            var displayFollowOn = function(suggestionObj) {
+               return suggestionObj.code + " - " + suggestionObj.configSlotCode + " - " + suggestionObj.name;
+            };
+
+            return {
+               limit: limit,
+               name: name,
+               minLength: minLength,
+               followOnTaskDefnSearch: followOnTaskDefnSearch,
+               displayFollowOn: displayFollowOn
+            };
+         };
+
+         /**
+          * The controller layer, it handles the initialization of the type ahead widget.
+          */
+         var FollowOnTaskDefinitionSearchController = function() {
+
+            var initTypeaheadSearch = function(data, notFoundMsg) {
+               var config = FollowOnTaskDefinitionSearchConfig(data);
+
+               typeAheadSearchInput.typeahead({
+                  minLength: config.minLength,
+                  highlight: true
+               }, {
+                  name: config.name,
+                  limit: config.limit,
+                  source: config.followOnTaskDefnSearch,
+                  display: config.displayFollowOn,
+                  templates: {
+                     notFound: '<div class="mx-typeahead-msg-notfound">' + notFoundMsg + '</div>'
+                  }
+               });
+
+               // once the typeahead input is initialized, the type field will lost focus, have to
+               // manually focus it again.
+               typeAheadSearchInput.focus();
+            };
+
+            var init = function(apiUrl, notFoundMsg) {
+               buttonController = FollowOnTaskDefinitionSearchButtonController();
+
+               // event handler when user select an option from the search result.
+               typeAheadSearchInput.bind('typeahead:select', function(evt, suggestion) {
+                  buttonController.enableBtn(okBtn);
+                  selectedOption = typeAheadSearchInput.val();
+                  uuidInput.attr('value', suggestion.id);
+               })
+
+               typeAheadSearchInput.keydown(function() {
+                  setTimeout(
+                     function() {
+                        if (typeAheadSearchInput.val() != selectedOption) {
+                           buttonController.disableBtn(okBtn);
+                           uuidInput.attr('value', '');
+                        }
+                     });
+               });
+
+               buttonController.disableBtn(okBtn);
+
+               typeAheadSearchInput.focus();
+
+               FollowOnTaskDefinitionSearchService(initTypeaheadSearch).getFollowOnTaskDefinitions(apiUrl, notFoundMsg);
+            };
+
+            return {
+               init: init
+            };
+         };
+
+         /**
+          * The service layer, it sends REST API call and pass the response data to controller
+          */
+         var FollowOnTaskDefinitionSearchService = function(initTypeaheadSearch) {
+
+            var getFollowOnTaskDefinitions = function(apiUrl, notFoundMsg) {
+
+               $.ajax({
+                  type: "GET",
+                  url: apiUrl,
+                  success: function(response) {
+                     initTypeaheadSearch(response, notFoundMsg);
+                  },
+                  error: function(err) {
+                     // if error happens with the API call, initialize the widget with an empty array.
+                     initTypeaheadSearch([], notFoundMsg);
+                  }
+               });
+            };
+
+            return {
+               getFollowOnTaskDefinitions: getFollowOnTaskDefinitions
+            };
+         };
+
+         /**
+          * The button controller that handles enable/disable.
+          */
+         var FollowOnTaskDefinitionSearchButtonController = function() {
+
+            var enableBtn = function(btn) {
+               if (btn) {
+                  if (btn.attr('originOnClickEvent')) {
+                     btn.attr('onclick', btn.attr('originOnClickEvent'));
+                  }
+
+                  if (btn.attr('originTitle')) {
+                     btn.attr('title', btn.attr('originTitle'));
+                  }
+
+                  btn.removeClass('disabled');
+                  btn.removeAttr('originOnClickEvent');
+                  btn.removeAttr('originTitle');
+               }
+            };
+
+            var disableBtn = function(btn) {
+               if (btn) {
+                  // store the button onclick handler and title for future restore
+                  if (!btn.attr('originOnClickEvent')) {
+                     btn.attr('originOnClickEvent', btn.attr('onclick'));
+                  }
+
+                  if (!btn.attr('originTitle')) {
+                     btn.attr('originTitle', btn.attr('title'));
+                  }
+
+                  btn.addClass('disabled');
+                  btn.attr('onclick', false);
+                  btn.attr('title', '');
+               }
+            };
+
+            return {
+               enableBtn: enableBtn,
+               disableBtn: disableBtn
+            };
+         };
+
+         return {
+            init: FollowOnTaskDefinitionSearchController().init
+         };
+      }
+
+      $(document).ready(function() {
+         var getFollowOnTaskDefinitionsApiUrl = 'data/followOnTaskDefns.json';
+         var typeaheadNotFoundMessage = '<%=getLocalizedMessage("web.msg.MSG_NO_MATCHING_FOLLOWON_TASK_DEFINITIONS")%>';
+
+         FollowOnTaskDefinitionSearch().init(getFollowOnTaskDefinitionsApiUrl, typeaheadNotFoundMessage);
+      });
+
+      $('#idInputTypeaheadFollowOnTaskSearch').focus();
+   </script>
 
 </body>
 

@@ -39,12 +39,6 @@ export default class FollowOnTaskDefinitionSearchController {
       this.apiUrl = apiUrlEl.val();
       this.selectedOption = '';
 
-      // save user selection from the search result.
-      this.typeAheadSearchInputEl.on('typeahead:selected', function(evt, suggestion) {
-         scope.enableOkBtn();
-         this.setSelectedTaskDefinition(suggestion);
-      });
-
       this.typeAheadSearchInputEl.keydown(function() {
          setTimeout(
             function() {
@@ -64,8 +58,11 @@ export default class FollowOnTaskDefinitionSearchController {
     * set the id value of the selected task definition to our html input element
     */
    setSelectedTaskDefinition(suggestion) {
-      this.selectedOption = this.typeAheadSearchInputEl.val();
-      this.followOnTaskDefnUuidOuputEl.attr('value', suggestion.id);
+      if (suggestion) {
+         this.typeAheadSearchInputEl.val(this.displayFollowOn(null, suggestion));
+         this.selectedOption = this.typeAheadSearchInputEl.val();
+         this.followOnTaskDefnUuidOuputEl.attr('value', suggestion.id);
+      }
    }
 
    /**
@@ -97,23 +94,46 @@ export default class FollowOnTaskDefinitionSearchController {
    /**
     * configure type ahead with data source and default configuration.
     */
-      configureTypeAhead(taskDefinitions) {
+   configureTypeAhead(taskDefinitions) {
       let scope = this;
       let config = new FollowOnTaskDefinitionSearchConfig(taskDefinitions);
       $.typeahead({
-         debug: true,
          input: scope.typeAheadSearchInputEl,
          highlight: true,
          name: config.name,
          limit: config.limit,
-         source: {
-            data: config.data,
-         },
          minLength: config.minLength,
          display: ["code", "configSlotCode", "name"],
          emptyTemplate: '<div class="mx-typeahead-msg-notfound">' + scope.notFoundMsgEl.val() + '</div>',
-         template: config.displayFollowOn // "<span>{{code}} - {{configSlotCode}} - {{name}}</span>"
+         template: scope.displayFollowOn, // "<span>{{code}} - {{configSlotCode}} - {{name}}</span>"
+         source: {
+            data: config.data,
+         },
+         callback: {
+            onClickBefore: function(a, b, c, d) {
+               console.log("onClickBefore");
+            },
+            onClick: function(typeAheadInputEl, selectionEl, selectedRecord, event) {
+               console.log("onClick", selectedRecord);
+               event.preventDefault();
+               scope.enableOkBtn();
+
+               // save user selection from the search result.
+               scope.setSelectedTaskDefinition(selectedRecord);
+
+               Typeahead[scope.typeAheadSearchInputEl].hideLayout();
+
+            }
+         },
       });
+   }
+
+   // Define how the result is displayed in the dropdown.
+   // It will display the result in the format of: task code - configslot code - task name
+   displayFollowOn(query, suggestionObj) {
+      if (suggestionObj) {
+         return suggestionObj.code + " - " + suggestionObj.configSlotCode + " - " + suggestionObj.name;
+      }
    }
 
    /**
@@ -130,6 +150,7 @@ export default class FollowOnTaskDefinitionSearchController {
          }
 
          this.okBtnEl.removeClass('disabled');
+         this.okBtnEl.removeAttr('disabled');
          this.okBtnEl.removeAttr('originOnClickEvent');
          this.okBtnEl.removeAttr('originTitle');
       }
@@ -150,6 +171,7 @@ export default class FollowOnTaskDefinitionSearchController {
          }
 
          this.okBtnEl.addClass('disabled');
+         this.okBtnEl.attr('disabled', 'disabled');
          this.okBtnEl.attr('onclick', false);
          this.okBtnEl.attr('title', '');
       }

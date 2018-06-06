@@ -8,22 +8,45 @@
 
 <body>
 
-   <form id="form-typeahead-test" name="form-typeahead-test">
-      <div class="typeahead__container">
-         <div class="typeahead__field">
-            <span class="typeahead__query">
-                <input class= "js-typeahead-test" id="followOnTaskSearchQuery" name="followOnTaskSearchQuery" type="search" placeholder="Search" autocomplete="off">
-            </span>
-         </div>
-      </div>
+   <!--<form id="form-typeahead-test" name="form-typeahead-test">-->
+   <!--   <div class="typeahead__container">-->
+   <!--      <div class="typeahead__field">-->
+   <!--         <span class="typeahead__query">-->
+   <!--             <input class= "js-typeahead-test" id="followOnTaskSearchQuery" name="followOnTaskSearchQuery" type="search" placeholder="Search" autocomplete="off">-->
+   <!--         </span>-->
+   <!--      </div>-->
+   <!--   </div>-->
+   <!--</form>-->
+
+   <link rel="stylesheet" href="glyphicons.css">
+   <link rel="stylesheet" href="jquery-typeahead/dist/jquery.typeahead.min.css">
+   <link rel="stylesheet" href="followOnTaskDefinitionSearch.css">
+
+   <div id="idFollowOnTaskSearchDiv">
+      <table class="formTableFull">
+         <tr class="formHeaderRow">
+            <td>
+               <mx:Localize>web.lbl.CREATE_FOLLOW_ON_TASK_DEFINITION_SEARCH</mx:Localize>
+            </td>
+         </tr>
+         <tr class="formContentRow">
+            <td id="idTypeaheadSearchCell" align="center">
+               <div class="mx-typeahead-search-wrapper typeahead__container">
+                  <input id="idInputTypeaheadFollowOnTaskSearch" class="mx-typeahead-search" type="text" placeholder="<mx:Localize>web.lbl.SEARCH_BY_CODE_OR_NAME_OR_CONFIGSLOT_CODE</mx:Localize>" />
+                  <i class="glyphicons glyphicons-search"></i>
+               </div>
+            </td>
+         </tr>
+      </table>
+   </div>
+
+   <form name="frmCreateFollowOnTask" action='<%=iContextPath + CreateFollowOnTask.SERVLET_PATH%>' method="post" startTransaction="true">
+      <!-- This attribute's value will be dynamically set based on what user select from the dropdown -->
+      <input type="hidden" name="aFollowOnTaskDefinitionUuid" id="idFieldFollowOnTaskDefnUuid">
+      <input type="hidden" id="idTypeaheadNotFoundMessage" value="web.msg.MSG_NO_MATCHING_FOLLOWON_TASK_DEFINITIONS">
+      <input type="hidden" id="idfollowOnTaskDefinitionRestAPI" value="data/followOnTaskDefns.json">
    </form>
 
-   <!-- This attribute's value will be dynamically set based on what user select from the dropdown -->
-   <input type="hidden" name="aFollowOnTaskDefinitionUuid" id="idFieldFollowOnTaskDefnUuid">
-   <input type="hidden" id="idTypeaheadNotFoundMessage" value="web.msg.MSG_NO_MATCHING_FOLLOWON_TASK_DEFINITIONS">
-	<input type="hidden" id="idfollowOnTaskDefinitionRestAPI" value="data/followOnTaskDefns.json">
-
-   
    <!-- The Bottom Buttons -->
    <div>
       <button id="idButtonOk" formName="frmCreateFollowOnTask" submitType="submit" text='web.lbl.OK' showWait="true" resourceCode='WebSecurity.Task.CREATE_FOLLOW_ON_TASK'>Ok</button>

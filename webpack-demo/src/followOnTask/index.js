@@ -1,7 +1,7 @@
 import FollowOnTaskDefinitionSearchController from './followOnTaskDefinitionSearchController.js';
 
 let controller = 
-    new FollowOnTaskDefinitionSearchController('followOnTaskSearchQuery', 
+    new FollowOnTaskDefinitionSearchController('idInputTypeaheadFollowOnTaskSearch', 
         'idButtonOk', 
         'idTypeaheadNotFoundMessage',
         'idFieldFollowOnTaskDefnUuid',

@@ -21,12 +21,4 @@ export default class FollowOnTaskDefinitionSearchConfig {
       // The minimum character length needed before suggestions start getting rendered.
       this.minLength = 1;
    }
-
-   // Define how the result is displayed in the dropdown.
-   // It will display the result in the format of: task code - configslot code - task name
-   displayFollowOn(query, suggestionObj) {
-      if (suggestionObj) {
-         return suggestionObj.code + " - " + suggestionObj.configSlotCode + " - " + suggestionObj.name;
-      }
-   }
 }

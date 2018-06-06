@@ -71,6 +71,18 @@ describe('FollowOnTaskDefinitionSearchController followOnTask/followOnTaskDefini
       expect(this.okButtonEl).toHaveClass('disabled');
    });
 
+
+   it('returns a properly constructed display value', function() {
+      let data = [{
+         code: 5,
+         configSlotCode: 3,
+         name: 'test'
+      }];
+
+      let controller = getGoodController();
+      expect(controller.displayFollowOn(null, data[0])).toBe("5 - 3 - test");
+   });
+
    it("Should set and clear selected task definition of output element", function() {
       let controller = getGoodController();
       controller.setSelectedTaskDefinition({ id: 'someValue' });

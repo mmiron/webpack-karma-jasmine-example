@@ -24,16 +24,5 @@ describe('FollowOnTaskDefinitionSearchConfig followOnTask/followOnTaskDefinition
       expect(config.limit).toBe(50);
       expect(config.minLength).toBe(1);
    });
-   
-   it('returns a properly constructed display value', function() {
-      let data = [{
-         code: 5,
-         configSlotCode : 3,
-         name: 'test'
-      }];
-      let config = new FollowOnTaskDefinitionSearchConfig(data);
-      
-      expect(config.displayFollowOn(null, data[0])).toBe("5 - 3 - test"); 
-   });
 
 });

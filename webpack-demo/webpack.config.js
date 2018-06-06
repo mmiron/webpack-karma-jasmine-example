@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const glob = require('glob');
-const testing = true; 
+const testing = false; 
 
 let filenameSearchPattern = "index.js";
 let filenameOutputPattern = "public/bundles/[name].js";
@@ -42,7 +42,7 @@ module.exports = {
         // hot: true,
         host: process.env.IP,
         port: process.env.PORT,
-        "public": "mmiron-g0liath.c9users.io" //no trailing slashs
+        "public": "webpack-karma-jasmine-seed-g0liath.c9users.io" // "mmiron-g0liath.c9users.io" //no trailing slashs
     },
     module: {
         rules: [{
