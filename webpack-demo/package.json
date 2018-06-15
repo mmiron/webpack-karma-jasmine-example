@@ -8,7 +8,8 @@
     "start": "webpack-dev-server --open",
     "watch": "webpack --watch",
     "dev": "webpack --mode development --module-bind js=babel-loader",
-    "build": "webpack --mode production --module-bind js=babel-loader"
+    "build:prod": "webpack --mode production --module-bind js=babel-loader",
+    "build:test": "webpack --mode production --module-bind js=babel-loader --env.isTesting=true"
   },
   "keywords": [],
   "author": "",
