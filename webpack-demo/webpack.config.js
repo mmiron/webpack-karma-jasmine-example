@@ -26,7 +26,7 @@ module.exports = function(env) {
     }
 
     let entryModules = { ...entries(filenameSearchPattern) };
-
+    console.log(process.env);
     return {
         mode: 'development',
         entry: entryModules,
@@ -40,7 +40,7 @@ module.exports = function(env) {
             // hot: true,
             host: process.env.IP,
             port: process.env.PORT,
-            "public": "webpack-karma-jasmine-seed-g0liath.c9users.io"
+            "public": process.env.C9_HOSTNAME || 'localhost' // "webpack-karma-jasmine-seed-g0liath.c9users.io"
         },
         module: {
             rules: [{
