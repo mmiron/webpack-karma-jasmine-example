@@ -26,7 +26,7 @@ module.exports = function(env) {
     }
 
     let entryModules = { ...entries(filenameSearchPattern) };
-    console.log(process.env);
+
     return {
         mode: 'development',
         entry: entryModules,
