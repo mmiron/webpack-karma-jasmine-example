@@ -52,7 +52,7 @@ export default class FollowOnTaskDefinitionSearchController {
 
       // bind sibling methods to class instance.
       this.initialize = this.initialize.bind(this);
-      this.configureTypeAhead = this.configureTypeAhead.bind(this);
+
    }
 
    /**
@@ -81,7 +81,7 @@ export default class FollowOnTaskDefinitionSearchController {
 
       try {
          FollowOnTaskDefinitionSearchService.getFollowOnTaskDefinitions(
-            this.apiUrl).then(this.configureTypeAhead);
+            this.apiUrl).then((taskDefinitions) => this.configureTypeAhead(taskDefinitions));
 
          // once the typeahead input is initialized, the type field will lost focus, have to
          // manually focus it again.
@@ -117,9 +117,7 @@ export default class FollowOnTaskDefinitionSearchController {
 
                // save user selection from the search result.
                scope.setSelectedTaskDefinition(selectedRecord);
-
-               Typeahead[scope.typeAheadSearchInputEl].hideLayout();
-
+               this.hideLayout();
             }
          },
       });
