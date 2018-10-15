@@ -1,3 +1,4 @@
-webpack-demo/node_modules/
-webpack-demo/build/test/
-webpack-demo/build/public/
+webpack-demo/legacy-js-seed/node_modules/
+webpack-demo/legacy-js-seed/build/test/
+webpack-demo/angularJS-seed/node_modules/
+webpack-demo/angular-unit-testing/node_modules/

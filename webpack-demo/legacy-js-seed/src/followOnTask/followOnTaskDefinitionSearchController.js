@@ -1,5 +1,6 @@
-/* global Typeahead */
 import $ from 'jquery';
+// import Typeahead from "typeahead.js";
+// import Bloodhound from "bloodhound-js";
 
 import FollowOnTaskDefinitionSearchConfig from './followOnTaskDefinitionSearchConfig.js';
 import FollowOnTaskDefinitionSearchService from './followOnTaskDefinitionSearchService.js';
