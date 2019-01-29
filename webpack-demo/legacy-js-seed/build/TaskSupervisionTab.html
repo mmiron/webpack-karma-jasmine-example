@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<%-- Tabulator table widget. --%>
+<link rel="stylesheet" href="<%=iContextPath%>/js/lib/tabulator-tables/dist/tabulator.min.css">
+
+<%--Using custom css for TaskSupervision Tab --%>
+<link href="../css/taskSupervisionTab/taskSupervisionTab.css" rel="stylesheet" type="text/css">
+
+
+<%@page import="com.mxi.mx.common.i18n.i18n"%>
+<%@page import="com.mxi.mx.common.config.UserActionParameters"%>
+<%@page import="com.mxi.mx.common.config.GlobalParameters"%>
+
+<%@page import="com.mxi.mx.web.jsp.controller.task.TaskDetailsController"%>
+<%@page import="com.mxi.mx.web.jsp.controller.task.CheckDetailsController"%>
+<%@page import="com.mxi.mx.web.jsp.controller.inventory.InventoryDetailsController"%>
+<%@page import="com.mxi.mx.web.jsp.controller.labour.LabourAssignmentController"%>
+
+<br>
+<table id="idSearchCriteriaGroupBox" class="formTable formTable-mxTagLib">
+   <tbody>
+      <tr id="idSearchCriteriaGroupBoxTitleRow" class="formHeaderRow">
+         <td id="idSearchCriteriaGroupBoxTitleCell" class="formTable-mxTagLib">
+            <div id="idSearchCriteriaGroupBoxTitle"><%=i18n.get( "web.lbl.SEARCH_CRITERIA" )%></div>
+         </td>
+      </tr>
+      <tr id="idSearchCriteriaGroupBoxContentRow" class="formContentRow">
+         <td>
+            <form id="idSearchCriteriaForm">
+               <table id="idSearchCriteriaContent" class="formContentTable-mxTagLib">
+                  <tr id="idSearchCriteriaContentRow">
+                     <td id="idCrewListLabelCell" class="paraHeader formFirstCol">
+                        <div id="idCrewListLabel"><%=i18n.get( "web.lbl.CREW" )%> :</div>
+                     </td>
+                     <td id="idCrewListCell" class="paraContent formSubCol">
+                        <select id="idCrewList"></select>
+                     </td>
+                     <td id="idStartDateTimeLabelCell" class="paraHeader formSubCol">
+                        <div id="idStartDateTimeLabel"><%=i18n.get( "web.lbl.SCHEDULED_START_DATE" )%> :</div>
+                     </td>
+                     <td id="idStartDateTimeCell" class="paraContent formSubCol">
+                        <mx:DateTimeField
+                              id="idStartDateTime"
+                              name="nameStartDateTime"
+                              width="140"
+                              disabled="false"
+                              showClear="false" />
+                     </td>
+                     <td id="idEndDateTimeLabelCell" class="paraHeader formSubCol">
+                        <div id="idEndDateTimeLabel"><%=i18n.get( "web.lbl.SCHEDULED_END_DATE" )%> :</div>
+                     </td>
+                     <td id="idEndDateTimeCell" class="paraContent formSubCol">
+                        <mx:DateTimeField
+                              id="idEndDateTime"
+                              name="nameEndDateTime"
+                              width="140"
+                              disabled="false"
+                              showClear="false" />
+                     </td>
+                     <td id="idShowCompleteLabelCell" class="paraHeader formSubCol">
+                        <div id="idShowCompleteLabel"><%=i18n.get( "web.lbl.SHOW_COMPLETE_JOB_CARDS" )%></div>
+                     </td>
+                     <td id="idShowCompleteCell" class="paraContent formEndCol">
+                        <input id="idShowComplete" type="checkbox">
+                     </td>
+                  </tr>
+                  <tr id="idButtonRow">
+                     <td id="idSearcButtonEmptyCell"></td>
+                     <td id="idSearchButtonCell" class="paraContent formFirstCol">
+                        <button id="idSearchButton" class="searchButton">
+                           <div id="idSearchButtonLabel"><%=i18n.get( "web.lbl.SEARCH" )%></div>
+                        </button>
+                     </td>
+                  </tr>
+               </table>
+            </form>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<br />
+<br />
+<div id="idToolBar" class="toolBar">
+   <button type="button" id="idJobStopButton" class="jobStopButton">
+      <div id="idJobStopButtonLabel">
+         <%=i18n.get( "web.lbl.JOB_STOP" )%>
+         <span id="jobStopButtonToolTipText" class="tooltiptext"><%=i18n.get( "web.msg.SELECT_INWORK_TO_ENABLE" )%></span>
+      </div>
+   </button>
+   <button type="button" id="idUnassignSelectedButton" class="jobStopButton">
+      <div id="idUnassignSelectedButtonLabel">
+         <%=i18n.get( "web.lbl.UNASSIGN_SELECTED" )%>
+      </div>
+   </button>
+</div>
+<div id="idSearchResults" class="formTable-mxTagLib"></div>
+
+<input type="hidden" id="idUser" value="<%= iUserId %>">
+<input type="hidden" id="idIsAllowedToSearch" value='<%=UserActionParameters.getInstance( iUserId ).getBoolean( "ACTION_SUPERVISOR_SEARCH_CREW_TASK_LABOR" )%>'>
+<input type="hidden" id="idIsAllowedToJobStop" value='<%=UserActionParameters.getInstance( iUserId ).getBoolean( "ACTION_SUPERVISOR_JOB_STOP_BY_PROXY" )%>'>
+<input type="hidden" id="idIsAllowedToUnassignSelected" value='<%=UserActionParameters.getInstance( iUserId ).getBoolean( "ACTION_SUPERVISOR_UNASSIGN" )%>'>
+<input type="hidden" id="idIsAllowedToEditSchedledHours" value='<%=UserActionParameters.getInstance( iUserId ).getBoolean( "ACTION_EDIT_LABOUR_REQUIREMENT" )%>'>
+<input type="hidden" id="idIsAllowedToEditActualHours" value='<%=UserActionParameters.getInstance( iUserId ).getBoolean( "ACTION_EDIT_LABOUR_HISTORY" )%>'>
+<input type="hidden" id="idlaborRowElaspedHoursThreshold" value='<%=GlobalParameters.getInstance("MXWEB").getBigDecimal( "LABOR_ROW_ELAPSED_TIME_THRESHOLD" )%>'>
+<input type="hidden" id="idNoSearchResultsMessage" value="<%=i18n.get( "web.msg.SEARCH_RETURNED_NO_RESULTS" )%>">
+<input type="hidden" id="idUnassignedLabel" value="<%=i18n.get( "web.lbl.UNASSIGNED" )%>">
+
+<input type="hidden" id="idContextPath" value='<%= iContextPath %>'>
+<input type="hidden" id="idTrackerImagePath" value='<%= iTrackerImagesPath %>'>
+<input type="hidden" id="idCurrentUrlHash" value='<%= iSessionData.registerString( iRequestData.toWebUri().toString() ) %>'>
+
+<input type="hidden" id="idTaskDetailsPagePath" value='<%= TaskDetailsController.PAGE_PATH %>'>
+<input type="hidden" id="idTaskDetailsPageTaskParm" value='<%= TaskDetailsController.PARM_TASK %>'>
+<input type="hidden" id="idInventoryDetailsPagePath" value='<%= InventoryDetailsController.PAGE_PATH %>'>
+<input type="hidden" id="idInventoryDetailsPageParm" value='<%= InventoryDetailsController.KEY_PARAMETER_NAME%>'>
+<input type="hidden" id="idCheckDetailsPagePath" value='<%= CheckDetailsController.PAGE_PATH %>'>
+<input type="hidden" id="idCheckDetailsPageParm" value='<%= CheckDetailsController.PARM_CHECK %>'>
+<input type="hidden" id="idLabourDetailsPagePath" value='<%= LabourAssignmentController.PAGE_PATH %>'>
+<input type="hidden" id="idLabourDetailsPageParm" value='<%= LabourAssignmentController.KEY_PARAMETER_NAME %>'>
+
+<script src="<%= iContextPath %>/js/lib/tabulator-tables/dist/tabulator.min.js"></script>
+<script src="<%= iContextPath %>/bundles/common-runtime.js"></script>
+<script src="<%= iContextPath %>/bundles/main/webapp/js/basemaintenance/task/tasksupervision.js"></script>

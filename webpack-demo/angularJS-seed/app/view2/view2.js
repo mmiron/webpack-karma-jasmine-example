@@ -1,4 +1,5 @@
 'use strict';
+/* global angular */
 
 angular.module('myApp.view2', ['ngRoute'])
 

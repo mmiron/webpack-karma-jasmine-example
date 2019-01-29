@@ -2,15 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const glob = require('glob');
+const pkg = require('./package.json'); //loads npm config file
 
 let filenameSearchPattern = "index.js";
-let filenameOutputPattern = "public/bundles/[name].js";
+let filenameOutputPattern = "src/main/webapp/bundles/[name].js"; // public/bundles/[name].js";
 
 module.exports = function(env) {
 
     if (env && env.isTesting == 'true') {
         filenameSearchPattern = "test_index.js";
-        filenameOutputPattern = "test/spec-bundle.js";
+        filenameOutputPattern = "src/test/javascript/spec-bundle.js";
     }
 
     function entries(filenameSearchPattern) {
@@ -25,22 +26,23 @@ module.exports = function(env) {
         }, {}));
     }
 
-    let entryModules = { ...entries(filenameSearchPattern) };
+    let entryModules = {
+        //vendor: Object.keys(pkg.dependencies),
+        //'style': glob.sync("./node_modules/**/dist/**/*.css"),
+        ...entries(filenameSearchPattern)
+    };
 
     return {
         mode: 'development',
         entry: entryModules,
         output: {
             filename: filenameOutputPattern,
-            path: path.resolve(__dirname, 'build')
+            path: path.resolve(__dirname, '.')
         },
         devtool: 'inline-source-map',
-        devServer: {
-            contentBase: './build',
-            // hot: true,
-            host: process.env.IP,
-            port: process.env.PORT,
-            "public": process.env.C9_HOSTNAME || 'localhost' // "webpack-karma-jasmine-seed-g0liath.c9users.io"
+        watch: false,
+        watchOptions: {
+            ignored: /node_modules/
         },
         module: {
             rules: [{
@@ -61,6 +63,11 @@ module.exports = function(env) {
                 $: "jquery",
                 jQuery: "jquery",
                 "window.jQuery": "jquery"
+            }),
+            //Finally add this line to bundle the vendor code separately
+            // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.min-[hash:6].js'),
+            new webpack.ProvidePlugin({
+                Promise: 'es6-promise-promise', // works as expected
             })
         ],
         externals: {

@@ -8,7 +8,8 @@ module.exports = function(config) {
     basePath: './',
 
     // frameworks to use; available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine-jquery', 'jasmine'],
+    plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
+    frameworks: ['jasmine', 'jasmine-jquery'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -22,9 +23,11 @@ module.exports = function(config) {
       'node_modules/jasmine-promises/dist/jasmine-promises.js',
       'node_modules/es6-promise/dist/es6-promise.min.js',
       'node_modules/es6-promise/dist/es6-promise.auto.min.js',
+	  
+	  'node_modules/tabulator-tables/dist/js/tabulator.min.js',
 
-      'build/test/spec-bundle.js',
-      'build/test/*.spec-bundle.js'
+      'src/test/javascript/spec-bundle.js',
+      'src/test/javascript/*.spec-bundle.js'
 
     ],
 

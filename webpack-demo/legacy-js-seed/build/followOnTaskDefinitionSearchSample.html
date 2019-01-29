@@ -44,7 +44,7 @@
       <!-- This attribute's value will be dynamically set based on what user select from the dropdown -->
       <input type="hidden" name="aFollowOnTaskDefinitionUuid" id="idFieldFollowOnTaskDefnUuid">
       <input type="hidden" id="idTypeaheadNotFoundMessage" value="web.msg.MSG_NO_MATCHING_FOLLOWON_TASK_DEFINITIONS">
-      <input type="hidden" id="idfollowOnTaskDefinitionRestAPI" value="data/followOnTaskDefns.json">
+      <input type="hidden" id="idfollowOnTaskDefinitionRestAPI" value="<%=iContextPath + CreateFollowOnTask.SERVLET_PATH%>/rest/data/followOnTaskDefns.json">
    </form>
 
    <!-- The Bottom Buttons -->
@@ -57,7 +57,7 @@
 
    <!-- Bootstrapping of javascript application and required dependencies -->
    <script type="text/javascript" src="public/bundles/common-runtime.js"></script>
-   <script type="text/javascript" src="public/bundles/followOnTask.js"></script>
+   <script type="text/javascript" src="public/bundles/engineering/requirementdefinition/followOnTask.js"></script>
 
 </body>
 

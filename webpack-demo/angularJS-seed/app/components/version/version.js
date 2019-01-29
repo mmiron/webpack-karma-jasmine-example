@@ -1,4 +1,5 @@
 'use strict';
+/* global angular */
 
 angular.module('myApp.version', [
   'myApp.version.interpolate-filter',
