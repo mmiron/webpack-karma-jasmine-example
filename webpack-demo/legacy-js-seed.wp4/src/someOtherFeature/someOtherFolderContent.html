@@ -1,0 +1,60 @@
+<html>
+
+<head>&#10;
+    <title></title>&#10;
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">&#10;
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">&#10;</head>&#10;
+
+<body>&#10;
+    <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
+       to have already been created so they can insert their magic into it. For example, if loaded
+       before body, Angular Scenario test framework fails to find the body and crashes and burns in
+       an epic manner. -->&#10;
+    <script src="context.js"></script>&#10;
+    <script type="text/javascript">
+        & #10;    // Configure our Karma and set up bindings&# 10;
+        window.__karma__.config = { "args": [], "useIframe": true, "runInParent": false, "captureConsole": true, "clearContext": true, "config": { "browserConsoleLogOptions": true } }; & #10;&# 10;
+        window.__karma__.setupContext(window); & #10;&# 10; // All served files with the latest timestamps&#10;    window.__karma__.files = {&#10;  '/base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js': 'daba65c98fa088349a3e9d7df843a63405ccfc15',&#10;  '/base/node_modules/karma-jasmine/lib/boot.js': '945a38bf4e45ad2770eb94868231905a04a0bd3e',&#10;  '/base/node_modules/karma-jasmine/lib/adapter.js': '6cf71867f538f40db053c1775b2c56a83696375c',&#10;  '/base/node_modules/karma-jasmine-jquery/lib/saveCurrentJquery.js': '7dc9b8495b938e044e4055cc611fe9ebfaea1480',&#10;  '/base/node_modules/karma-jasmine-jquery/lib/jqueryForJasmineJqueryPlugin.js': '8d55aabf2b76486cc311fdc553a3613cad46aa3f',&#10;  '/base/node_modules/karma-jasmine-jquery/lib/setJqueryForJasminJqueryPlugin.js': '0d7808eefd8f21b9b4ae2a6c00cb46f643fc14a0',&#10;  '/base/node_modules/karma-jasmine-jquery/lib/jasmine-jquery.js': 'ce2d29e89e41867cf8b916255f74d7fdd1692f4e',&#10;  '/base/node_modules/jquery/dist/jquery.min.js': '0dc32db4aa9c5f03f3b38c47d883dbd4fed13aae',&#10;  '/base/node_modules/phantomjs-polyfill-string-includes/index.js': '69ac9b9cdd58bb5bee46d784fafa763271488073',&#10;  '/base/node_modules/jquery-typeahead/src/jquery.typeahead.js': '7f696e3ea453b435219dc7d0db81c6a4aa8a281a',&#10;  '/base/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js': '2d1d71c466419e49eb5ffe50d67750c04d576968',&#10;  '/base/node_modules/jasmine-jquery/lib/jasmine-jquery.js': 'efc370dd9ff398b3031e511a03052d6408b18601',&#10;  '/base/node_modules/jasmine-ajax/lib/mock-ajax.js': 'df88a27d939f0dd46c1dc30c36edfe6d7e053d60',&#10;  '/base/node_modules/jasmine-promises/dist/jasmine-promises.js': '561c76e59df1c2a85a9508eb458d647743e3b372',&#10;  '/base/node_modules/es6-promise/dist/es6-promise.min.js': '8562aecce9590e6ca55e6c8bf10881520bbcd146',&#10;  '/base/node_modules/es6-promise/dist/es6-promise.auto.min.js': 'aa12f0b9a7c99abcf5b3ade4cd9a3b244865bea6',&#10;  '/base/build/test/spec-bundle.js': 'f636003a8ba83438b02e0893e3e8c6df23536c71',&#10;  '/base/build/test/1.spec-bundle.js': '75ee6e1c837973db00c8d8c2c38c6ea6df9e9941',&#10;  '/base/build/test/2.spec-bundle.js': '7b7fef70d47219f8756f9205badab6de8cf8e972',&#10;  '/base/build/test/3.spec-bundle.js': '7e86b83a830f6228117a7150f427b5240d71b69a',&#10;  '/base/build/test/4.spec-bundle.js': '8ab5b2e0b7d344487adb158287617b5864e17d8f'&#10;};&#10;&#10;
+    </script>&#10;
+    <!-- Dynamically replaced with <script> tags -->&#10;
+    <script type="text/javascript" src="/base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?daba65c98fa088349a3e9d7df843a63405ccfc15" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine/lib/boot.js?945a38bf4e45ad2770eb94868231905a04a0bd3e" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine/lib/adapter.js?6cf71867f538f40db053c1775b2c56a83696375c" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine-jquery/lib/saveCurrentJquery.js?7dc9b8495b938e044e4055cc611fe9ebfaea1480" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine-jquery/lib/jqueryForJasmineJqueryPlugin.js?8d55aabf2b76486cc311fdc553a3613cad46aa3f" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine-jquery/lib/setJqueryForJasminJqueryPlugin.js?0d7808eefd8f21b9b4ae2a6c00cb46f643fc14a0" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/karma-jasmine-jquery/lib/jasmine-jquery.js?ce2d29e89e41867cf8b916255f74d7fdd1692f4e" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jquery/dist/jquery.min.js?0dc32db4aa9c5f03f3b38c47d883dbd4fed13aae" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/phantomjs-polyfill-string-includes/index.js?69ac9b9cdd58bb5bee46d784fafa763271488073" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jquery-typeahead/src/jquery.typeahead.js?7f696e3ea453b435219dc7d0db81c6a4aa8a281a" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js?2d1d71c466419e49eb5ffe50d67750c04d576968" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jasmine-jquery/lib/jasmine-jquery.js?efc370dd9ff398b3031e511a03052d6408b18601" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jasmine-ajax/lib/mock-ajax.js?df88a27d939f0dd46c1dc30c36edfe6d7e053d60" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/jasmine-promises/dist/jasmine-promises.js?561c76e59df1c2a85a9508eb458d647743e3b372" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/es6-promise/dist/es6-promise.min.js?8562aecce9590e6ca55e6c8bf10881520bbcd146" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/node_modules/es6-promise/dist/es6-promise.auto.min.js?aa12f0b9a7c99abcf5b3ade4cd9a3b244865bea6" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/build/test/spec-bundle.js?f636003a8ba83438b02e0893e3e8c6df23536c71" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/build/test/1.spec-bundle.js?75ee6e1c837973db00c8d8c2c38c6ea6df9e9941" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/build/test/2.spec-bundle.js?7b7fef70d47219f8756f9205badab6de8cf8e972" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/build/test/3.spec-bundle.js?7e86b83a830f6228117a7150f427b5240d71b69a" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript" src="/base/build/test/4.spec-bundle.js?8ab5b2e0b7d344487adb158287617b5864e17d8f" crossorigin="anonymous"></script>&#10;
+    <script type="text/javascript">
+        & #10;    window.__karma__.loaded();&# 10;
+    </script>&#10;&#10;&#10;
+    <div id="jasmine-fixtures">
+        <form id="form-typeahead-test" name="form-typeahead-test">
+            <div class="typeahead__container">
+                <div class="typeahead__field"> 
+                    <span class="typeahead__query">          
+                        <input class="js-typeahead-test" id="followOnTaskSearchQuery" name="followOnTaskSearchQuery">        
+                    </span>
+                </div>
+            </div> 
+            <button id="idButtonOk" title="mytitle">Ok</button> 
+            <input type="hidden" name="aFollowOnTaskDefinitionUuid" id="idFieldFollowOnTaskDefnUuid" value="someValue"> 
+            <input type="hidden" id="idTypeaheadNotFoundMessage" value="web.msg.MSG_NO_MATCHING_FOLLOWON_TASK_DEFINITIONS">
+        </form>
+    </div>
+</body>
+
+</html>
