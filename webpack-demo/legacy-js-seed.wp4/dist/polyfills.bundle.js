@@ -81,56 +81,24 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/polyfills.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/Controller.js":
-/*!***************************!*\
-  !*** ./src/Controller.js ***!
-  \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/polyfills.js":
+/*!**************************!*\
+  !*** ./src/polyfills.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Controller = function Controller(window, document, containerName) {
-  _classCallCheck(this, Controller);
-
-  this.__window = window;
-  this.__document = document;
-  this.__container = this.__document.getElementById(containerName);
-
-  if (!this.__container) {
-    throw 'Container element must be supplied';
-  }
-
-  this.__container.innerText = "Controller Loaded";
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Controller);
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Controller */ "./src/Controller.js");
-
-/* harmony default export */ __webpack_exports__["default"] = ((function (window, document, containerName) {
-  var controller = new _Controller__WEBPACK_IMPORTED_MODULE_0__["default"](window, document, containerName);
-})(window, document, 'container'));
+/* Load polyfill:
+* This file and its dependencies get bundled into the "polyfills" chunk by WebPack and loaded as first scripts.
+* Add loading code of further polyfills in here as needed. */
+// import 'promise-polyfill/src/polyfill';
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=index.js.bundle.js.map
+//# sourceMappingURL=polyfills.bundle.js.map

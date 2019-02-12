@@ -25,18 +25,15 @@ export default function(env) {
     }
 
     let entryModules = {
-        //vendor: Object.keys(pkg.dependencies),
-        //'style': glob.sync("./node_modules/**/dist/**/*.css"),
+        polyfills: './src/polyfills.js',
         ...entries(filenameSearchPattern)
     };
 
-    console.log("entryModules", entryModules);
-
     return {
-        // entry: path.join(__dirname, 'src/index.js'),
         entry: entryModules,
         output: {
             path: path.join(__dirname, 'dist'),
+            chunkFilename: '[name].bundle.js',
             filename: '[name].bundle.js'
         },
         module: {
@@ -50,13 +47,25 @@ export default function(env) {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Custom template',
-                template: path.join(__dirname, 'src/index.template.html')
+                chunksSortMode: "manual",
+                chunks: ['polyfills', 'vendors', 'app']
             }),
             new ScriptExtHtmlWebpackPlugin({
                 defaultAttribute: 'defer'
             })
         ],
+        resolve: {
+            alias: {
+                Promise: path.resolve(__dirname, 'node_modules/promise-polyfill/src/polyfill')
+            }
+        },
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    commons: { test: /[\\/]node_modules[\\/]/, name: "vendors", chunks: "all" }
+                }
+            }
+        },
         stats: {
             colors: true
         },
