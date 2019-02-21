@@ -1,11 +1,6 @@
-
-
 import $ from 'jquery';
-// import 'jquery-typeahead/jquery.typeahead.min.css';
-import "jquery-typeahead";
-
-// https://hackernoon.com/a-tale-of-webpack-4-and-how-to-finally-configure-it-in-the-right-way-4e94c8e7e5c1
-// import "./followOnTaskDefinitionSearch.css";
+// import Typeahead from "typeahead.js";
+// import Bloodhound from "bloodhound-js";
 
 import FollowOnTaskDefinitionSearchConfig from './followOnTaskDefinitionSearchConfig.js';
 import FollowOnTaskDefinitionSearchService from './followOnTaskDefinitionSearchService.js';

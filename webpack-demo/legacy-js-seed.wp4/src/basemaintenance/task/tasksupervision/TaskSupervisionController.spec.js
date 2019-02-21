@@ -42,7 +42,7 @@ describe('TaskSupervisionController', function() {
             showCompleteId: 'idShowComplete',
             searchButtonId: 'idSearchButton',
             searchResultsId: 'idSearchResults',
-            isAllowedToSearch : 'true'
+            isAllowedToSearch: 'true'
          };
 
          setFixtures(
@@ -294,7 +294,6 @@ describe('TaskSupervisionController', function() {
                }).toThrowError(errorMessage);
             });
       	  **/
-
    });
 
 });

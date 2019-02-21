@@ -6,10 +6,11 @@ import glob from 'glob';
 
 export default function(env) {
     let filenameSearchPattern = "index.js";
+    let filenameOutputPattern = "[name].js";
 
     if (env && env.isTesting == 'true') {
         filenameSearchPattern = "test_index.js";
-        // filenameOutputPattern = "src/test/javascript/spec-bundle.js";
+        filenameOutputPattern = "spec-bundle.js";
     }
 
     function entries(filenameSearchPattern) {
@@ -25,16 +26,17 @@ export default function(env) {
     }
 
     let entryModules = {
-        polyfills: './src/polyfills.js',
         ...entries(filenameSearchPattern)
     };
+
+    console.log("entryModules", entryModules);
 
     return {
         entry: entryModules,
         output: {
             path: path.join(__dirname, 'dist'),
-            chunkFilename: '[name].bundle.js',
-            filename: '[name].bundle.js'
+            chunkFilename: '[name].js',
+            filename: filenameOutputPattern
         },
         module: {
             rules: [{
@@ -48,12 +50,21 @@ export default function(env) {
         plugins: [
             new HtmlWebpackPlugin({
                 chunksSortMode: "manual",
-                chunks: ['polyfills', 'vendors', 'app']
+                chunks: ['vendors', 'app'],
+                template: path.join(__dirname, 'src/index.template.html')
+            }),
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: "jquery",
+                "window.jQuery": "jquery"
             }),
             new ScriptExtHtmlWebpackPlugin({
                 defaultAttribute: 'defer'
             })
         ],
+        externals: {
+            "jquery": "jQuery",
+        },
         resolve: {
             alias: {
                 Promise: path.resolve(__dirname, 'node_modules/promise-polyfill/src/polyfill')

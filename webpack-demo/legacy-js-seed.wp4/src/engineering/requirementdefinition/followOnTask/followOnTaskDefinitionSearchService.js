@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import 'Promise';
 
 /**
  * The service layer, it sends REST API call and pass the response data to controller

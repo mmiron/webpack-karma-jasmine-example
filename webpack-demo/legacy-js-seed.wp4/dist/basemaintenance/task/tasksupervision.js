@@ -163,17 +163,19 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TaskSupervisionController; });
-/* harmony import */ var _TaskSupervisionService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskSupervisionService */ "./src/basemaintenance/task/tasksupervision/TaskSupervisionService.js");
-/* harmony import */ var _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../common/validation/DateTimeValidator */ "./src/common/validation/DateTimeValidator.js");
-/* harmony import */ var _common_util_DateTimeHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../common/util/DateTimeHelper */ "./src/common/util/DateTimeHelper.js");
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TaskSupervisionController; });
+/* harmony import */ var tabulator_tables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tabulator-tables */ "./node_modules/tabulator-tables/dist/js/tabulator.js");
+/* harmony import */ var tabulator_tables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tabulator_tables__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TaskSupervisionService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskSupervisionService */ "./src/basemaintenance/task/tasksupervision/TaskSupervisionService.js");
+/* harmony import */ var _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../common/validation/DateTimeValidator */ "./src/common/validation/DateTimeValidator.js");
+/* harmony import */ var _common_util_DateTimeHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../common/util/DateTimeHelper */ "./src/common/util/DateTimeHelper.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-/* global Tabulator */
+
 
 
 
@@ -202,7 +204,7 @@ function () {
       throw new Error('crewsFieldId must be a SELECT element');
     }
 
-    this.service = parms.TaskSupervisionService || new _TaskSupervisionService__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.service = parms.TaskSupervisionService || new _TaskSupervisionService__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.isAllowedToSearch = parms.isAllowedToSearch === 'true';
     this.isAllowedToEditSchedledHours = parms.isAllowedToEditSchedledHours === 'true';
     this.isAllowedToEditActualHours = parms.isAllowedToEditActualHours === 'true';
@@ -231,9 +233,13 @@ function () {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
-        _this.initShowCompleteTasksWidget();
+        try {
+          _this.initShowCompleteTasksWidget();
 
-        _this.initResultsTable();
+          _this.initResultsTable();
+        } catch (e) {
+          console.error(e);
+        }
 
         _this.initSearchButton();
 
@@ -293,7 +299,7 @@ function () {
       var listOfLabourAttrs = ['technician', 'labourSkill', 'labourStatus', 'jobStopReason', 'elapsedHoursMinutes', 'scheduledHours', 'actualHours']; // Note: it appears that Tabulator has difficulty if visible:false fields are after other fields,
       // so configure them first.	  
 
-      this.table = new Tabulator("#" + this.searchResultsId, {
+      this.table = new tabulator_tables__WEBPACK_IMPORTED_MODULE_0___default.a("#" + this.searchResultsId, {
         columns: [{
           title: 'Task Id',
           field: 'taskId',
@@ -687,7 +693,7 @@ function () {
       var time = cell.getValue();
 
       if (time) {
-        var decimalTime = _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_1__["default"].convertTimeToDecimal(time);
+        var decimalTime = _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_2__["default"].convertTimeToDecimal(time);
 
         if (decimalTime > parseFloat(this.laborRowElaspedTimeThreshold)) {
           return "<span class='elapsedTimeExceedsThreshold'>" + time + "</span>";
@@ -699,7 +705,7 @@ function () {
   }, {
     key: "validateHours",
     value: function validateHours(cell, value) {
-      return _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_1__["default"].validateHours(value);
+      return _common_validation_DateTimeValidator__WEBPACK_IMPORTED_MODULE_2__["default"].validateHours(value);
     }
   }, {
     key: "handleScheduleHoursEdit",
@@ -719,6 +725,7 @@ function () {
 }();
 
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "jquery")))
 
 /***/ }),
 
@@ -732,7 +739,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TaskSupervisionService; });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _common_util_DateTimeHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../common/util/DateTimeHelper */ "./src/common/util/DateTimeHelper.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1202,7 +1209,18 @@ function () {
 
 
 
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
 /***/ })
 
 /******/ });
-//# sourceMappingURL=tasksupervision.bundle.js.map
+//# sourceMappingURL=tasksupervision.js.map

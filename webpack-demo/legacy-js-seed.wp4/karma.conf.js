@@ -1,6 +1,6 @@
 // Karma configuration
 // const webpack = require('webpack');
-import webpackConfig from './webpack.config.js';
+// import webpackConfig from './webpack.config.babel.js';
 
 module.exports = function(config) {
   config.set({
@@ -14,21 +14,15 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/phantomjs-polyfill-string-includes/index.js',
       'node_modules/jquery-typeahead/src/jquery.typeahead.js',
-
       'node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js',
       'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
       'node_modules/jasmine-ajax/lib/mock-ajax.js',
-      'node_modules/jasmine-promises/dist/jasmine-promises.js',
       'node_modules/es6-promise/dist/es6-promise.min.js',
       'node_modules/es6-promise/dist/es6-promise.auto.min.js',
-	  
-	  'node_modules/tabulator-tables/dist/js/tabulator.min.js',
-
-      'src/test/javascript/spec-bundle.js',
-      'src/test/javascript/*.spec-bundle.js'
-
+      
+      'dist/vendors.js',
+      'dist/spec-bundle.js'
     ],
 
     // list of files / patterns to exclude
@@ -44,7 +38,6 @@ module.exports = function(config) {
     reporters: ['progress'],
 
     // web server port
-    // port: 9876,
     hostname: process.env.IP,
     port: process.env.PORT,
     runnerPort: 0,
@@ -54,7 +47,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
@@ -75,10 +68,10 @@ module.exports = function(config) {
       config: {
         browserConsoleLogOptions: true
       }
-    },
+    }
 
     // webpack inclusion
-    webpack: webpackConfig
+    // webpack: webpackConfig
 
   });
 };

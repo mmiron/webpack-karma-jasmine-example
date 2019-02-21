@@ -23,8 +23,8 @@ module.exports = function(config) {
       'node_modules/jasmine-promises/dist/jasmine-promises.js',
       'node_modules/es6-promise/dist/es6-promise.min.js',
       'node_modules/es6-promise/dist/es6-promise.auto.min.js',
-	  
-	  'node_modules/tabulator-tables/dist/js/tabulator.min.js',
+
+      'node_modules/tabulator-tables/dist/js/tabulator.min.js',
 
       'src/test/javascript/spec-bundle.js',
       'src/test/javascript/*.spec-bundle.js'

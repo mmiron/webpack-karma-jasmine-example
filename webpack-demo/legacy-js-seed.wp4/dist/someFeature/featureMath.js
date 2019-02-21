@@ -128,4 +128,4 @@ console.log("multiply 4 * 3=", Object(_featureMath_js__WEBPACK_IMPORTED_MODULE_0
 /***/ })
 
 /******/ });
-//# sourceMappingURL=featureMath.bundle.js.map
+//# sourceMappingURL=featureMath.js.map

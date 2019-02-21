@@ -1,4 +1,4 @@
-/* global Tabulator */
+import Tabulator from 'tabulator-tables';
 import TaskSupervisionService from './TaskSupervisionService';
 import DateTimeValidator from '../../../common/validation/DateTimeValidator';
 import DateTimeHelper from '../../../common/util/DateTimeHelper';
@@ -48,8 +48,14 @@ export default class TaskSupervisionController {
 
    init() {
       return new Promise((resolve, reject) => {
-         this.initShowCompleteTasksWidget();
-         this.initResultsTable();
+         try {
+            this.initShowCompleteTasksWidget();
+            this.initResultsTable();
+         }
+         catch (e) {
+            console.error(e);
+         }
+
          this.initSearchButton();
 
          Promise.all([this.initCrewsWidget(), this.initStartAndEndWidgets()]).then((results) => {
@@ -100,7 +106,7 @@ export default class TaskSupervisionController {
       const listOfLabourAttrs = ['technician', 'labourSkill', 'labourStatus', 'jobStopReason', 'elapsedHoursMinutes',
          'scheduledHours', 'actualHours'
       ];
-
+      
       // Note: it appears that Tabulator has difficulty if visible:false fields are after other fields,
       // so configure them first.	  
       this.table = new Tabulator("#" + this.searchResultsId, {
@@ -223,11 +229,12 @@ export default class TaskSupervisionController {
                'endDateTime': this.formatDateTime(this.endDateWidgetId),
                'showCompleteTasks': document.getElementById(this.showCompleteId).checked
             };
-            
+
             return this.service.performSearch(args).then(response => {
                this.updateResultsTable(response);
             });
-         } else {
+         }
+         else {
             resolve();
          }
       });

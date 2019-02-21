@@ -1,65 +1,6 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/ 		var executeModules = data[2];
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 		// add entry modules from loaded chunk to deferred list
-/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
-/******/
-/******/ 		// run deferred modules when all chunks ready
-/******/ 		return checkDeferredModules();
-/******/ 	};
-/******/ 	function checkDeferredModules() {
-/******/ 		var result;
-/******/ 		for(var i = 0; i < deferredModules.length; i++) {
-/******/ 			var deferredModule = deferredModules[i];
-/******/ 			var fulfilled = true;
-/******/ 			for(var j = 1; j < deferredModule.length; j++) {
-/******/ 				var depId = deferredModule[j];
-/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
-/******/ 			}
-/******/ 			if(fulfilled) {
-/******/ 				deferredModules.splice(i--, 1);
-/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
-/******/ 			}
-/******/ 		}
-/******/ 		return result;
-/******/ 	}
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"engineering/requirementdefinition/followOnTask": 0
-/******/ 	};
-/******/
-/******/ 	var deferredModules = [];
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -138,18 +79,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
-/******/
-/******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./src/engineering/requirementdefinition/followOnTask/index.js","vendors"]);
-/******/ 	// run deferred modules when ready
-/******/ 	return checkDeferredModules();
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/engineering/requirementdefinition/followOnTask/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -202,22 +134,18 @@ var FollowOnTaskDefinitionSearchConfig = function FollowOnTaskDefinitionSearchCo
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FollowOnTaskDefinitionSearchController; });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var jquery_typeahead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-typeahead */ "./node_modules/jquery-typeahead/dist/jquery.typeahead.min.js");
-/* harmony import */ var jquery_typeahead__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_typeahead__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _followOnTaskDefinitionSearchConfig_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./followOnTaskDefinitionSearchConfig.js */ "./src/engineering/requirementdefinition/followOnTask/followOnTaskDefinitionSearchConfig.js");
-/* harmony import */ var _followOnTaskDefinitionSearchService_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./followOnTaskDefinitionSearchService.js */ "./src/engineering/requirementdefinition/followOnTask/followOnTaskDefinitionSearchService.js");
+/* harmony import */ var _followOnTaskDefinitionSearchConfig_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./followOnTaskDefinitionSearchConfig.js */ "./src/engineering/requirementdefinition/followOnTask/followOnTaskDefinitionSearchConfig.js");
+/* harmony import */ var _followOnTaskDefinitionSearchService_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./followOnTaskDefinitionSearchService.js */ "./src/engineering/requirementdefinition/followOnTask/followOnTaskDefinitionSearchService.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- // import 'jquery-typeahead/jquery.typeahead.min.css';
-
- // https://hackernoon.com/a-tale-of-webpack-4-and-how-to-finally-configure-it-in-the-right-way-4e94c8e7e5c1
-// import "./followOnTaskDefinitionSearch.css";
+ // import Typeahead from "typeahead.js";
+// import Bloodhound from "bloodhound-js";
 
 
 
@@ -306,7 +234,7 @@ function () {
       this.disableOkBtn();
 
       try {
-        return _followOnTaskDefinitionSearchService_js__WEBPACK_IMPORTED_MODULE_3__["default"].getFollowOnTaskDefinitions(this.apiUrl).then(function (taskDefinitions) {
+        return _followOnTaskDefinitionSearchService_js__WEBPACK_IMPORTED_MODULE_2__["default"].getFollowOnTaskDefinitions(this.apiUrl).then(function (taskDefinitions) {
           _this.configureTypeAhead(taskDefinitions); // once the typeahead input is initialized, the type field will lost focus, have to
           // manually focus it again.
 
@@ -325,7 +253,7 @@ function () {
     key: "configureTypeAhead",
     value: function configureTypeAhead(taskDefinitions) {
       var scope = this;
-      var config = new _followOnTaskDefinitionSearchConfig_js__WEBPACK_IMPORTED_MODULE_2__["default"](taskDefinitions); // create a display value that will allow full text search on full value.
+      var config = new _followOnTaskDefinitionSearchConfig_js__WEBPACK_IMPORTED_MODULE_1__["default"](taskDefinitions); // create a display value that will allow full text search on full value.
 
       jquery__WEBPACK_IMPORTED_MODULE_0___default.a.each(config.data, function (index, data) {
         data.displayValue = scope.displayFollowOn(null, data);
@@ -425,15 +353,13 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FollowOnTaskDefinitionSearchService; });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var Promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Promise */ "./node_modules/promise-polyfill/src/polyfill.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 
 
 /**
@@ -511,7 +437,18 @@ __webpack_require__.r(__webpack_exports__);
 var controller = new _followOnTaskDefinitionSearchController_js__WEBPACK_IMPORTED_MODULE_0__["default"]('idInputTypeaheadFollowOnTaskSearch', 'idButtonOk', 'idTypeaheadNotFoundMessage', 'idFieldFollowOnTaskDefnUuid', 'idfollowOnTaskDefinitionRestAPI');
 controller.initialize();
 
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
 /***/ })
 
 /******/ });
-//# sourceMappingURL=followOnTask.bundle.js.map
+//# sourceMappingURL=followOnTask.js.map

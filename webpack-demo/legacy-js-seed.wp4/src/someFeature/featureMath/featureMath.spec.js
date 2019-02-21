@@ -2,7 +2,7 @@
 import { Add, Subtract, Multiply } from './featureMath.js';
 
 describe('[Dummy]', () => {
-	
+
 	it('[Add] should add two numbers together and return the result', () => {
 		expect(Add(1, 2)).toBe(3);
 	});
@@ -15,4 +15,4 @@ describe('[Dummy]', () => {
 		expect(Multiply(1, 2)).toBe(2);
 	});
 
-}); 
+});
