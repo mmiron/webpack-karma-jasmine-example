@@ -29,8 +29,6 @@ export default function(env) {
         ...entries(filenameSearchPattern)
     };
 
-    console.log("entryModules", entryModules);
-
     return {
         entry: entryModules,
         output: {
