@@ -1,4 +1,6 @@
-/* global expect, jasmine, beforeAll, spyOn, $ */
+/* global expect, jasmine, beforeAll, spyOn */
+
+import $ from 'jquery';
 import FollowOnTaskDefinitionSearchService from './followOnTaskDefinitionSearchService.js';
 
 describe('FollowOnTaskDefinitionSearchService followOnTask/followOnTaskDefinitionSearchService.js', function() {

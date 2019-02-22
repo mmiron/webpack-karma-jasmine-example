@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Tabulator from 'tabulator-tables';
 import TaskSupervisionService from './TaskSupervisionService';
 import DateTimeValidator from '../../../common/validation/DateTimeValidator';

@@ -144,8 +144,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- // import Typeahead from "typeahead.js";
-// import Bloodhound from "bloodhound-js";
 
 
 
@@ -377,6 +375,7 @@ function () {
     key: "sortTaskDefinitions",
     value: function sortTaskDefinitions(taskDefinitions) {
       if (!taskDefinitions || !(taskDefinitions instanceof Array)) {
+        console.error("taskDefinitions expected to be an Array");
         throw new Error("taskDefinitions expected to be an Array");
       }
 
@@ -404,8 +403,10 @@ function () {
           url: apiUrl,
           success: function success(taskDefinitionsResponse) {
             // nice to have: postProcessor hook
+            console.log("back from ajax");
             var sortedTaskDefinitions = scope.sortTaskDefinitions(taskDefinitionsResponse);
-            resolve(sortedTaskDefinitions);
+            console.log("back from sortedTaskDefinitions... resolving");
+            return resolve(sortedTaskDefinitions);
           },
           error: function error(err) {
             // if error happens with the API call, initialize the widget with an empty array.

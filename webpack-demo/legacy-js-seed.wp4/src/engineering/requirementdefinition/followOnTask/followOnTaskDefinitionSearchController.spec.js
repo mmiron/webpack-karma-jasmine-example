@@ -1,8 +1,9 @@
-/* global $, expect, jasmine, spyOn, $, setFixtures */
+/* global expect, jasmine, spyOn, $, setFixtures */
 /**
  * Create Follow-on Task Search Test Suite
  **/
-
+ 
+import $ from 'jquery';
 import FollowOnTaskDefinitionSearchController from './followOnTaskDefinitionSearchController.js';
 
 describe('FollowOnTaskDefinitionSearchController followOnTask/followOnTaskDefinitionSearchController.js', function() {
@@ -104,7 +105,7 @@ describe('FollowOnTaskDefinitionSearchController followOnTask/followOnTaskDefini
       ];
 
       spyOn($, 'ajax').and.callFake(function(e) {
-         
+         console.log("in ajax");
          return e.success(responseTaskDefinitions);
       });
 
@@ -112,7 +113,10 @@ describe('FollowOnTaskDefinitionSearchController followOnTask/followOnTaskDefini
       let nativeEl = $("#followOnTaskSearchQuery");
 
       // initialize controller
+      console.log("init");
+      try {
       controller.initialize().then(function() {
+         console.log("done init");
          // check to see if ajax was done with proper url
          expect($.ajax.calls.mostRecent().args[0].url).toEqual(restApiUrl);
 
@@ -123,6 +127,9 @@ describe('FollowOnTaskDefinitionSearchController followOnTask/followOnTaskDefini
          expect(nativeEl).toBeFocused();
          done();
       });
+      } catch (e) {
+         console.error("error: ", e);
+      }
 
    });
 

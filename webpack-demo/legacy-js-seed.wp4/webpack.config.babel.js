@@ -55,8 +55,7 @@ export default function(env) {
             }),
             new webpack.ProvidePlugin({
                 $: "jquery",
-                jQuery: "jquery",
-                "window.jQuery": "jquery"
+                jQuery: "jquery"
             }),
             new ScriptExtHtmlWebpackPlugin({
                 defaultAttribute: 'defer'

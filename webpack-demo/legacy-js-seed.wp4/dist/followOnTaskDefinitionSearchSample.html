@@ -18,8 +18,6 @@
    <!--   </div>-->
    <!--</form>-->
 
-   <link rel="stylesheet" href="glyphicons.css">
-   <link rel="stylesheet" href="jquery-typeahead/dist/jquery.typeahead.min.css">
    <link rel="stylesheet" href="followOnTaskDefinitionSearch.css">
 
    <div id="idFollowOnTaskSearchDiv">
@@ -53,9 +51,12 @@
       <button id="idButtonCancel" text='web.lbl.CANCEL' redirectPage='<%=lController.getReturnToPage()%>' type="CANCEL">Cancel</button>
    </div>
 
+   <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+   <script type="text/javascript" src="jquery-typeahead/src/jquery.typeahead.js"></script>
+
    <!-- Bootstrapping of javascript application and required dependencies -->
-   <script type="text/javascript" src="vendors.bundle.js" defer></script>
-   <script type="text/javascript" src="./engineering/requirementdefinition/followOnTask.bundle.js"></script>
+   <script type="text/javascript" src="vendors.js" defer></script>
+   <script type="text/javascript" src="./engineering/requirementdefinition/followOnTask.js"></script>
 
 </body>
 

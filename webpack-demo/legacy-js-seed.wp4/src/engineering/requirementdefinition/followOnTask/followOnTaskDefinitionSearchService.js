@@ -7,6 +7,7 @@ export default class FollowOnTaskDefinitionSearchService {
 
    static sortTaskDefinitions(taskDefinitions) {
       if (!taskDefinitions || !(taskDefinitions instanceof Array)) {
+         console.error("taskDefinitions expected to be an Array");
          throw new Error("taskDefinitions expected to be an Array");
       }
 
@@ -32,8 +33,10 @@ export default class FollowOnTaskDefinitionSearchService {
             url: apiUrl,
             success: function(taskDefinitionsResponse) {
                // nice to have: postProcessor hook
+               console.log("back from ajax");
                let sortedTaskDefinitions = scope.sortTaskDefinitions(taskDefinitionsResponse);
-               resolve(sortedTaskDefinitions);
+               console.log("back from sortedTaskDefinitions... resolving");
+               return resolve(sortedTaskDefinitions);
             },
             error: function(err) {
                // if error happens with the API call, initialize the widget with an empty array.

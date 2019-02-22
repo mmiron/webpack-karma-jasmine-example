@@ -1,4 +1,5 @@
 /* global $, expect, spyOn, jasmine, setFixtures */
+import $ from 'jquery';
 import TaskSupervisionController from './TaskSupervisionController';
 
 describe('TaskSupervisionController', function() {
