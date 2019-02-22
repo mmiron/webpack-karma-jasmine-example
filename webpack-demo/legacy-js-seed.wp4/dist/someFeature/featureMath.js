@@ -90,7 +90,7 @@
 /*!****************************************************!*\
   !*** ./src/someFeature/featureMath/featureMath.js ***!
   \****************************************************/
-/*! exports provided: Add, Subtract, Multiply */
+/*! exports provided: Add, Subtract, Multiply, Divide */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Add", function() { return Add; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Subtract", function() { return Subtract; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Multiply", function() { return Multiply; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Divide", function() { return Divide; });
 var Add = function Add(x, y) {
   return x + y;
 };
@@ -106,6 +107,9 @@ var Subtract = function Subtract(x, y) {
 };
 var Multiply = function Multiply(x, y) {
   return x * y;
+};
+var Divide = function Divide(x, y) {
+  return x / y;
 };
 
 /***/ }),
