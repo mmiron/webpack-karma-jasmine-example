@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import DateTimeHelper from '../../../common/util/DateTimeHelper';
 
 export default class TaskSupervisionService {
 
@@ -9,15 +8,16 @@ export default class TaskSupervisionService {
 
    getCrewsForUser(userId) {
 
-      if (!userId) {
+      if ( ! userId ) {
          throw new Error('userId is mandatory');
       }
 
       const crewListRestEndpoint = '/maintenix/rest/crews';
-      const args = { 'userId': userId };
+      const args = {'userId': userId};
+
       return new Promise((resolve, reject) => {
          $.ajax({
-            url: crewListRestEndpoint,
+            url : crewListRestEndpoint,
             type: "GET",
             data: args,
             success: (crewResponseList, textStatus, jqXHR) => {
@@ -31,50 +31,47 @@ export default class TaskSupervisionService {
       });
    }
 
-   getDefaultStartAndEndDates(userId) {
-      if (!userId) {
+   getDefaultStartAndEndDates(userId){
+      if ( ! userId ) {
          throw new Error('userId is mandatory');
       }
-
       const currentDateTimeRestEndpoint = '/maintenix/rest/datetime/getCurrent';
-      const args = { 'userId': userId };
+      const args = {'userId': userId};
 
       return new Promise((resolve, reject) => {
          $.ajax({
-            url: currentDateTimeRestEndpoint,
+            url : currentDateTimeRestEndpoint,
             type: "GET",
             data: args,
             success: (response, textStatus, jqXHR) => {
                let defaultStart = new Date(
-                  response.startYear,
-                  response.startMonth - 1,
-                  response.startDayOfMonth,
-                  response.startHourInDay,
-                  response.startMinute
+                     response.startYear,
+                     response.startMonth - 1,
+                     response.startDayOfMonth,
+                     response.startHourInDay,
+                     response.startMinute
                );
                let defaultEnd = new Date(
-                  response.endYear,
-                  response.endMonth - 1,
-                  response.endDayOfMonth,
-                  response.endHourInDay,
-                  response.endMinute
+                     response.endYear,
+                     response.endMonth - 1,
+                     response.endDayOfMonth,
+                     response.endHourInDay,
+                     response.endMinute
                );
 
                let defaultStartEndValues = {};
+
                defaultStartEndValues.startDate = this.formatDate(defaultStart);
                defaultStartEndValues.startTime = this.formatTime(defaultStart);
                defaultStartEndValues.startTimeZone = response.startTimezone;
                try {
                   this.validateDateFormat(defaultStartEndValues.startDate);
-               }
-               catch (error) {
+               } catch (error) {
                   reject('default startDate failed validation: ' + error.message);
                }
-
                try {
                   this.validateTimeFormat(defaultStartEndValues.startTime);
-               }
-               catch (error) {
+               } catch (error) {
                   reject('default startTime failed validation: ' + error.message);
                }
 
@@ -83,14 +80,12 @@ export default class TaskSupervisionService {
                defaultStartEndValues.endTimeZone = response.endTimezone;
                try {
                   this.validateDateFormat(defaultStartEndValues.endDate);
-               }
-               catch (error) {
+               } catch (error) {
                   reject('default endDate failed validation: ' + error.message);
                }
                try {
                   this.validateTimeFormat(defaultStartEndValues.endTime);
-               }
-               catch (error) {
+               } catch (error) {
                   reject('default endTime failed validation: ' + error.message);
                }
 
@@ -104,30 +99,94 @@ export default class TaskSupervisionService {
       });
    }
 
-   performSearch(args) {
+   performSearch(args, sucessHandler, failureHandler) {
+
+      // The crewId is mandatory,
+      // if not provided then an empty data set is returned to the success handler.
+      if ( !args.crewId ) {
+         sucessHandler([]);
+         return;
+      }
+
+      let excludeComplete = ((args.showCompleteTasks == true) ? false : true);
+
+      let searchData = {
+         onlyWorkscoped: true,
+         onlyContainingLabour: true,
+         assignedToCrewId: args.crewId,
+         minScheduledStartDateTime: args.startDateTime,
+         maxScheduledStartDateTime: args.endDateTime,
+         excludeCompleted: excludeComplete,
+
+         taskKeyEncryptionName: args.taskKeyEncryptionName,
+         workpackageKeyEncryptionName: args.workpackageKeyEncryptionName,
+         workLocationKeyEncryptionName: args.workLocationKeyEncryptionName,
+         aircraftKeyEncryptionName: args.aircraftKeyEncryptionName,
+         labourKeyEncryptionName: args.labourKeyEncryptionName
+      };
+      let listCrewTaskLabourEndpoint = '/maintenix/rest/tasks';
+      $.ajax({
+         url : listCrewTaskLabourEndpoint,
+         data: searchData,
+         type: "GET",
+         success: (response, textStatus, jqXHR) => {
+            // The response is a json list of objects generated from:
+            //    com.mxi.mx.web.rest.task.TasksResponse
+            sucessHandler(response);
+         },
+         error: (jqXHR, textStatus, errorThrown) => {
+            let message = this.errorMsgPrefix + jqXHR.status;
+            failureHandler(message);
+         }
+      });
+   }
+
+   performJobStop(args, sucessHandler, failureHandler) {
+      let data = { ids: args };
+      let labourEndpoint = '/maintenix/rest/labour/stopByProxy';
+      $.ajax({
+         url : labourEndpoint,
+         type: "PUT",
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: (response, textStatus, jqXHR) => {
+            sucessHandler(response);
+         },
+         error: (jqXHR, textStatus, errorThrown) => {
+            let message = 'Error code =  ' + jqXHR.status;
+            failureHandler(message);
+         }
+      });
+   }
+
+   performUnassign(args, sucessHandler, failureHandler) {
+      let data = { ids: args };
+      let labourEndpoint = '/maintenix/rest/labour/unassign';
+      $.ajax({
+         url : labourEndpoint,
+         type: "PUT",
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: (response, textStatus, jqXHR) => {
+            sucessHandler(response);
+         },
+         error: (jqXHR, textStatus, errorThrown) => {
+            let message = 'Error code =  ' + jqXHR.status;
+            failureHandler(message);
+         }
+      });
+   }
+
+   updateScheduledHours(taskId, labourRowId, newValue) {
+      let data = {
+            scheduledHours: newValue
+      };
       return new Promise((resolve, reject) => {
-         let excludeComplete = ((args.showCompleteTasks == true) ? false : true);
-
-         let searchData = {
-            onlyWorkscoped: true,
-            onlyContainingLabour: true,
-            assignedToCrewId: args.crewId,
-            minScheduledStartDateTime: args.startDateTime,
-            maxScheduledStartDateTime: args.endDateTime,
-            excludeCompleted: excludeComplete
-         };
-         
-         let listCrewTaskLabourEndpoint = '/maintenix/rest/tasks';
-
          $.ajax({
-            url: listCrewTaskLabourEndpoint,
-            data: searchData,
-            type: "GET",
-            success: (response, textStatus, jqXHR) => {
-               // The response is a json list of objects generated from:
-               //    com.mxi.mx.web.rest.task.CrewTaskLabourResponse
-               resolve(response);
-            },
+            url : '/maintenix/rest/tasks/' + taskId + '/labours/' + labourRowId,
+            type: "PUT",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
             error: (jqXHR, textStatus, errorThrown) => {
                let message = this.errorMsgPrefix + jqXHR.status;
                reject(message);
@@ -136,67 +195,33 @@ export default class TaskSupervisionService {
       });
    }
 
-   // validateHours(value) {
-   //    // This is based on the NUMBER(9,5) constraint for
-   //    // sched_labour_role.sched_hr and sched_labour_role.actual_hr
-   //    let split = value.split('.');
-   //    if ( split.length > 0 ) {
-   //       if ( split[0].length > 4 ) {
-   //          return false;
-   //       }
-   //       if ( split.length == 2 ) {
-   //          if ( split[1].length > 5 ) {
-   //             return false;
-   //          }
-   //       } else if (split.length > 2 ) {
-   //          return false;
-   //       }
-   //    }
-   //    return true;
-   // }
-
-   updateScheduledHours(taskId, labourRowId, newValue) {
-      let data = {
-         scheduledHours: newValue
-      };
-      $.ajax({
-         url: '/maintenix/rest/tasks/' + taskId + '/labours/' + labourRowId,
-         type: "PUT",
-         contentType: 'application/json',
-         data: JSON.stringify(data),
-         error: (jqXHR, textStatus, errorThrown) => {
-            let message = this.errorMsgPrefix + jqXHR.status;
-            new Error(message);
-         }
-      });
-   }
-
    updateActualHours(taskId, labourRowId, newValue) {
       let data = {
-         actualHours: newValue
+            actualHours: newValue
       };
-      $.ajax({
-         url: '/maintenix/rest/tasks/' + taskId + '/labours/' + labourRowId,
-         type: "PUT",
-         contentType: 'application/json',
-         data: JSON.stringify(data),
-         error: (jqXHR, textStatus, errorThrown) => {
-            let message = this.errorMsgPrefix + jqXHR.status;
-            new Error(message);
-         }
+      return new Promise((resolve, reject) => {
+         $.ajax({
+            url : '/maintenix/rest/tasks/' + taskId + '/labours/' + labourRowId,
+            type: "PUT",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            error: (jqXHR, textStatus, errorThrown) => {
+               let message = this.errorMsgPrefix + jqXHR.status;
+               reject(message);
+            }
+         });
       });
    }
-
 
    //
    // private methods
    //
 
    validateDateFormat(dateStr) {
-      if (!dateStr) {
+      if( ! dateStr ) {
          throw new Error('dateStr is mandatory.');
       }
-      if (typeof dateStr !== 'string') {
+      if (typeof dateStr !== 'string')  {
          throw new Error('dateStr is not a string');
       }
 
@@ -204,18 +229,18 @@ export default class TaskSupervisionService {
       const dateFormat = /^(([0-9])|([0-2][0-9])|([3][0-1]))\-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\-\d{4}$/;
       const matchArray = dateStr.match(dateFormat);
 
-      if (matchArray == null) {
-         throw new Error('dateStr has invalid format.');
+      if( matchArray == null ) {
+          throw new Error('dateStr has invalid format.');
       }
 
       return true;
-   }
+  }
 
    validateTimeFormat(timeStr) {
-      if (!timeStr) {
+      if ( ! timeStr ){
          throw new Error('timeStr is mandatory.');
       }
-      if (typeof timeStr !== 'string') {
+      if (typeof timeStr !== 'string')  {
          throw new Error('timeStr is not a string.');
       }
 
@@ -224,14 +249,10 @@ export default class TaskSupervisionService {
       const matchArray = timeStr.match(timeFormat);
 
       if (matchArray == null) {
-         throw new Error('timeStr has invalid format.');
+          throw new Error('timeStr has invalid format.');
       }
 
       return true;
-   }
-
-   addHours(date, hours) {
-      return new Date(date.getTime() + (hours * 60 * 60 * 1000));
    }
 
    formatDate(date) {

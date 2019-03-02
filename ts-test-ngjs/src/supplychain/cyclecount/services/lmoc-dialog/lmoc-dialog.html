@@ -1,0 +1,32 @@
+<md-dialog id="idLmocDialogMessage" class="lmoc-dialog" ng-flex-gt-sm="nogrow">
+    <form ng-cloak>
+        <md-toolbar id="idLmocDialogToolBar" class="panel-toolbar"
+            ng-class="$ctrl.style.toolbar">
+            <div class="md-toolbar-tools">
+                <h2 id="idLmocDialogTitle">{{$ctrl.title}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div flex layout="row">
+                <span ng-bind-html="$ctrl.message"></span>
+            </div>
+        </md-dialog-content>
+    </form>
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button id="idLmocDialogCancelButton" ng-if="$ctrl.allowCancel"
+        type="submit" 
+        ng-class="$ctrl.style.button"
+        class="md-raised"
+        ng-click="$ctrl.cancel()">
+        {{$ctrl.cancelLabel}}
+    </md-button>
+    <md-button id="idLmocDialogOKButton"
+        type="submit" 
+        ng-class="$ctrl.style.button"
+        class="md-raised"
+        ng-click="$ctrl.close()">
+        {{$ctrl.okLabel}}
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

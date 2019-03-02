@@ -1,0 +1,68 @@
+ /**
+ * Common Dialog Styles
+ */
+
+.lmoc-dialog .content {
+    text-align: left;
+    font-size: 1.2em;
+    max-height: 8em;
+    overflow-y: auto;
+}
+
+.lmoc-dialog md-dialog-content {
+    padding: 20px;
+}
+
+.lmoc-dialog .md-toolbar-tools {
+    text-align: center;
+}
+
+.lmoc-dialog {
+    width: auto;
+    max-width: 70%;
+    min-width: 600px;
+}
+
+.lmoc-dialog .light {
+	color: red;
+}
+
+.maintenix-barcode,
+.maintenix-barcode .material-icons {
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+/*lmoc-dialog is used to change the styling for all existing lmocweb dialogs.
+lmoc-dialog-content on the other hand focuses mostly inside the dialog(content)
+for phone-up-deferal and pending-deferel-requests dialogs for now */
+
+/* The label of PUD and PDR dialogs are set here*/
+.lmoc-dialog-content .label {
+    text-align: left;
+    font-size: .9em;
+    opacity: 0.7;
+}
+
+/* See phone-up-deferral or pending-deferral-request for example use cases*/
+.lmoc-dialog-content .content {
+    text-align: left;
+    font-size: 1em;
+    font-weight: 700;
+    word-break: break-word;
+    margin-bottom: 15px;
+    max-width: 550px;
+}
+
+/* Used for warning messages or other alerts in dialogs.*/
+.lmoc-dialog-content .message {
+    max-width: 550px;
+    margin-bottom: 15px;
+}
+
+.lmoc-dialog-content .notes-list-item {
+    margin-bottom: -25px;
+    margin-left: 30px;
+}

@@ -1,0 +1,17 @@
+<div class="lmoc-dialog-content">
+    <div class="label">
+        {{'LMOC_COMMON.LABEL.NAME' | translate}}</div>
+    <div class="content">{{name}}</div>
+    <div class="label">
+        {{'LMOC_COMMON.LABEL.VERSION' | translate}}</div>
+    <div class="content">{{version}}</div>
+    <div class="label">
+        {{'LMOC_COMMON.LABEL.BUILD_LABEL' | translate}}</div>
+    <div class="content">{{buildStamp}}</div>
+    <div class="label">
+        {{'LMOC_COMMON.LABEL.BUILD_TIME' | translate}}</div>
+    <div class="content">{{buildTime | date }}</div>
+    <div class="label">
+        {{'LMOC_COMMON.LABEL.COPYRIGHT' | translate}}</div>
+    <div class="content" ng-repeat="copyright in copyrights">{{copyright}}</div>
+</div>

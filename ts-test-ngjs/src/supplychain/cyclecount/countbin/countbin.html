@@ -1,0 +1,23 @@
+<h3>Count Bin: {{ binLocation }}</h3>
+
+
+<table class="table table-hover table-striped table-condensed">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">PartNo</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Count By</th>     
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="count in pendingCounts">
+      <th scope="row">{{ count.PartNo}}</th>
+      <td><input type="number" ng-model='count.qty'></td>
+      <td>{{ count.CountBy}}</td>      
+    </tr>
+  </tbody>
+</table>
+
+<button type="" class="btn btn-primary mb-2" ng-click="goToMain()">OK</button>
+<button type="" class="btn btn-primary mb-2" ng-click="goToMain()">CANCEL</button>
+<button type="" class="btn btn-primary mb-2" ng-click="goToMain()">Found Unexpected Part</button>

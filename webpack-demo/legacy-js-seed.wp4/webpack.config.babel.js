@@ -4,7 +4,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import glob from 'glob';
 
-export default function(env) {
+export default function(env, argv) {
+    const NODE_ENV = argv.mode || "development";
     let filenameSearchPattern = "index.js";
     let filenameOutputPattern = "[name].js";
 
@@ -29,7 +30,7 @@ export default function(env) {
         ...entries(filenameSearchPattern)
     };
 
-    return {
+    let config = {
         entry: entryModules,
         output: {
             path: path.join(__dirname, 'dist'),
@@ -44,6 +45,10 @@ export default function(env) {
                     loader: 'babel-loader'
                 }]
             }]
+        },
+        performance: {
+            maxEntrypointSize: 512000,
+            maxAssetSize: 512000
         },
         plugins: [
             new HtmlWebpackPlugin({
@@ -76,7 +81,12 @@ export default function(env) {
         },
         stats: {
             colors: true
-        },
-        devtool: 'source-map'
+        }
     };
+
+    if (NODE_ENV == "development") {
+        config.devtool = 'source-map';
+    }
+
+    return config;
 }

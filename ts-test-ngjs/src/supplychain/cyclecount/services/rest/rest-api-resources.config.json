@@ -1,0 +1,13 @@
+{
+   "AIRCRAFT": "/lmocweb/api/inventory/aircraft/search",
+   "ASSEMBLY_CAPABILITY": "/amapi/maintenance/eng/prog/assembly/capabilities",
+   "DEFERRAL_REFERENCE": "/amapi/maintenance/plan/deferral-reference",
+   "DEFERRAL_REFERENCE_TYPES" : "/amapi/maintenance/plan/deferral-reference/types",
+   "FAULT": "/amapi/maintenance/exec/fault",
+   "FLIGHT": "/amapi/maintenance/plan/flight",
+   "PERMISSION": "/amapi/sys/permission",
+   "RECURRING_TASK_DEFINITION" : "/amapi/maintenance/prog/taskdefn/recurring",
+   "REPAIR_REFERENCE": "/amapi/maintenance/plan/repair-reference",
+   "REPAIR_REFERENCE_TYPES": "/amapi/maintenance/plan/repair-reference/types",
+   "VERSION" : "/amapi/sys/version"
+}

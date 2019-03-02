@@ -1,4 +1,5 @@
 import "@babel/polyfill";
+import 'nodelist-foreach-polyfill';
 
 var str = "Hello world, welcome to the universe.";
 var n = str.includes("world");
@@ -188,3 +189,22 @@ console.log(symbol3.toString());
 
 console.log(Symbol('foo') === Symbol('foo'));
 // expected output: false
+
+
+var node = document.createElement("div");
+var kid1 = document.createElement("p");
+var kid2 = document.createTextNode("hey");
+var kid3 = document.createElement("span");
+
+node.appendChild(kid1);
+node.appendChild(kid2);
+node.appendChild(kid3);
+
+list = node.childNodes;
+
+list.forEach( 
+  function(currentValue, currentIndex, listObj) { 
+    console.log(currentValue + ', ' + currentIndex + ', ' + this); 
+  },
+  'myThisArg'
+);
